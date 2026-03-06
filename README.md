@@ -1,51 +1,82 @@
-JobFit Copilot is an AI-powered resume and job posting comparison tool built with [Next.js](https://nextjs.org), TypeScript, Tailwind CSS, and the OpenAI API.
+## JobFit Copilot
 
-## Getting Started
+JobFit Copilot is an AI-powered tool that compares a **job posting** with your **resume** and surfaces what matters for an interview loop: how strong the fit is, what’s missing, and how to rewrite your resume for that specific role.
 
-First, install dependencies and configure your OpenAI API key.
+---
 
-### 1. Install dependencies
+## What it does
 
-```bash
-npm install
-```
+On the main screen you can:
 
-### 2. Configure environment
+- **Paste a job description** – the full posting, including responsibilities and requirements.
+- **Paste your resume** – or the most relevant sections for that role.
+- Click **Analyze fit** to get:
+  - **Match score** (0–100) with a visual bar.
+  - **Summary** of how well you align with the role.
+  - **Strengths**: where your experience maps cleanly to the posting.
+  - **Gaps / risks**: missing skills, seniority mismatches, or weak signals.
+  - **Resume bullet upgrades**: concrete bullet suggestions tuned to that job.
+  - **Cover letter draft** you can tweak and send.
 
-Create a `.env.local` file in the project root:
+While the structured score and sections are computed, a **live “analysis in progress” feed** streams in token‑by‑token so the UI feels responsive and transparent.
 
-```bash
-OPENAI_API_KEY=your_openai_api_key_here
-```
+---
 
-### 3. Run the development server
+## How it works
 
-```bash
-npm run dev
-```
+- **Streaming analysis channel**
+  - `POST /api/analyze-stream` uses the OpenAI Chat Completions API in **streaming mode**.
+  - The server exposes this as **Server‑Sent Events (SSE)** and emits JSON events:
+    - `ready` >> stream initialized
+    - `delta` >> new text chunk from the model
+    - `done` / `error` >> completion state
+  - The client reads these events with a `ReadableStream` reader and renders the text live in a scrollable panel.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Structured scoring channel**
+  - `POST /api/analyze` sends the same inputs with a strict JSON‑only prompt and `response_format: { type: "json_object" }`.
+  - The backend parses this into a strongly typed `AnalysisResult` (`matchScore`, `summary`, `strengths`, `gaps`, `resumeImprovements`, `coverLetter`).
+  - The React UI renders this in the right‑hand “Fit analysis” panel once the JSON response is available.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to use JobFit Copilot.
+Both calls are fired in parallel from the client so you get **instant streaming feedback** and **eventual structured output** without extra round‑trips.
 
-Paste a job description and your resume, then click **Analyze fit** to get:
+---
 
-- An overall match score
-- Strengths and gaps relative to the role
-- Suggested resume bullet improvements
-- A tailored cover letter draft you can refine
+## What it’s built with
 
-## Learn More
+- **Framework**: [Next.js](https://nextjs.org) (App Router)
+  - Route handlers in `src/app/api/...` for colocated backend logic.
+  - `next/font` for Google font optimization (Sora + IBM Plex).
+- **Frontend**: React + TypeScript
+  - Single primary page in `src/app/page.tsx`.
+  - Tailwind CSS v4 for styling, with a custom **dark gradient theme**, “glass” panels, and branded scrollbars.
+- **AI**: [OpenAI Node SDK](https://github.com/openai/openai-node)
+  - `gpt-4.1-mini` for both streaming text analysis and structured JSON output.
+  - API keys are read only on the server via `process.env.OPENAI_API_KEY`.
 
-To learn more about Next.js, take a look at the following resources:
+This keeps everything in one codebase: no separate backend service, but still a clear separation between streaming vs. scoring concerns.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Running it locally
 
-## Deploy on Vercel
+1. **Install dependencies**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. **Configure environment**
+
+   Create a `.env.local` file in the project root:
+
+   ```bash
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+3. **Run the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+Open `http://localhost:3000` and paste a job description + your resume to see the streaming analysis and structured fit breakdown. 
