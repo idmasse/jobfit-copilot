@@ -187,7 +187,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex items-center justify-center rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-emerald-950 shadow-lg shadow-emerald-400/25 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-60"
+                className="btn-glow inline-flex min-w-[9rem] items-center justify-center whitespace-nowrap rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-emerald-950 shadow-lg shadow-emerald-400/25 transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? "Analyzing fit..." : "Analyze fit"}
               </button>

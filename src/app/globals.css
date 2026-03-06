@@ -85,3 +85,31 @@ textarea::-webkit-scrollbar-thumb:hover {
 .scrollbar-brand::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, #22c55e, #a855f7);
 }
+
+@keyframes button-glow {
+  0% {
+    transform: scale(1);
+    background-color: #4ade80; /* emerald-400 */
+    box-shadow:
+      0 0 16px rgba(52, 211, 153, 0.22),
+      0 0 0 rgba(56, 189, 248, 0);
+  }
+  50% {
+    transform: scale(1.02);
+    background-color: #22c55e; /* emerald-500 */
+    box-shadow:
+      0 0 22px rgba(52, 211, 153, 0.44),
+      0 0 13px rgba(56, 189, 248, 0.28);
+  }
+  100% {
+    transform: scale(1);
+    background-color: #4ade80; /* emerald-400 */
+    box-shadow:
+      0 0 16px rgba(52, 211, 153, 0.22),
+      0 0 0 rgba(56, 189, 248, 0);
+  }
+}
+
+.btn-glow {
+  animation: button-glow 3s ease-in-out infinite;
+}
