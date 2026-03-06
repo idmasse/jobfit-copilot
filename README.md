@@ -2,7 +2,7 @@
 
 JobFit Copilot is an AI-powered tool that compares a **job posting** with your **resume** and surfaces what matters for an interview: how strong the fit is, what’s missing, and how to rewrite your resume for that specific role.
 
-## App can be previewd at: https://jobfit-copilot.vercel.app/
+#### App can be previewd at: https://jobfit-copilot.vercel.app/
 
 ---
 
