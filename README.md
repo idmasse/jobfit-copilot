@@ -1,24 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+JobFit Copilot is an AI-powered resume and job posting comparison tool built with [Next.js](https://nextjs.org), TypeScript, Tailwind CSS, and the OpenAI API.
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies and configure your OpenAI API key.
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Configure environment
+
+Create a `.env.local` file in the project root:
+
+```bash
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open [http://localhost:3000](http://localhost:3000) with your browser to use JobFit Copilot.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Paste a job description and your resume, then click **Analyze fit** to get:
+
+- An overall match score
+- Strengths and gaps relative to the role
+- Suggested resume bullet improvements
+- A tailored cover letter draft you can refine
 
 ## Learn More
 
