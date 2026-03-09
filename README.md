@@ -2,7 +2,7 @@
 
 JobFit Copilot is an AI-powered tool that compares a **job posting** with your **resume** and surfaces what matters for an interview: how strong the fit is, what’s missing, and how to rewrite your resume for that specific role.
 
-#### App can be previewd at: https://jobfit-copilot.vercel.app/
+#### App can be previewed at: https://jobfit-copilot.vercel.app/
 
 ---
 
@@ -41,23 +41,7 @@ While the structured score and sections are computed, a **live “analysis in pr
 
 Both calls are fired in parallel from the client so you get **instant streaming feedback** and **eventual structured output** without extra round‑trips.
 
----
-
-## What it’s built with
-
-- **Framework**: [Next.js](https://nextjs.org) (App Router)
-  - Route handlers in `src/app/api/...` for colocated backend logic.
-  - `next/font` for Google font optimization (Sora + IBM Plex).
-- **Frontend**: React + TypeScript
-  - Single primary page in `src/app/page.tsx`.
-  - Tailwind CSS v4 for styling, with a custom **dark gradient theme**, “glass” panels, and branded scrollbars.
-- **AI**: [OpenAI Node SDK](https://github.com/openai/openai-node)
-  - `gpt-4.1-mini` for both streaming text analysis and structured JSON output.
-  - API keys are read only on the server via `process.env.OPENAI_API_KEY`.
-
-This keeps everything in one codebase: no separate backend service, but still a clear separation between streaming vs. scoring concerns.
-
----
+--- 
 
 ## Running it locally
 
@@ -82,3 +66,10 @@ This keeps everything in one codebase: no separate backend service, but still a 
    ```
 
 Open `http://localhost:3000` and paste a job description + your resume to see the streaming analysis and structured fit breakdown. 
+
+---
+
+##Future Improvements
+- Make the analyze stream accessible with a toggler
+- Persist user data with either local storage or integrated with postgres
+- UI Improvements
